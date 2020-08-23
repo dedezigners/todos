@@ -16,3 +16,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/questions', 'QuestionController@index')->name('question.index');
 Route::apiResource('/question', 'QuestionController')->except('index');
+
+Route::get('/categories', 'CategoryController@index')->name('category.index');
+Route::apiResource('/category', 'CategoryController')->except('index');
+
+Route::get('/question/{question}/replies', 'ReplyController@index')->name('reply.index');
+Route::apiResource('/question/{question}/reply', 'ReplyController')->except('index');
+
+Route::post('/like/{reply}', 'LikeController@like')->name('like');
+Route::delete('/like/{reply}', 'LikeController@dislike')->name('dislike');
