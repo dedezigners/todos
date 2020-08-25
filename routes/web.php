@@ -13,6 +13,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+// Route::get('/', function () {
+//     return view('index');
+// });
+
+// Route::get('{slug}', function() {
+//     return view('index');
+// });
+
+Route::view('/', 'index')->name('index');
+Route::view('/{slug}', 'index')->name('index.any');
