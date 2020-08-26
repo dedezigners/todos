@@ -13,13 +13,12 @@ class User {
         const access_token = res.data.access_token
         const user = res.data.user
         
-        
         if (Token.isValid(access_token)) {
-            console.log(user)
-            console.log(access_token)
             console.log("User and Token stored")
             Storage.store(user, access_token)
         }
+
+        window.location = '/forum'
     }
 
     hasToken() {
@@ -38,6 +37,7 @@ class User {
 
     logout() {
         Storage.clear()
+        window.location = '/forum'
     }
 
     name() {

@@ -4,7 +4,8 @@ class Token {
         const payload = this.payload(token)
 
         if (payload) {
-            return payload.iss == "http://todos.live/api/auth/login" ? true : false;
+            return payload.iss == "http://todos.live/api/auth/login"
+            || "http://todos.live/api/auth/register" ? true : false;
         }
 
         return false;
