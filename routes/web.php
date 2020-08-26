@@ -22,4 +22,5 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::view('/', 'index')->name('index');
-Route::view('/{slug}', 'index')->name('index.any');
+Route::view('/{any}', 'index')->name('index.any');
+Route::view('/{any}/{slug}', 'index');
