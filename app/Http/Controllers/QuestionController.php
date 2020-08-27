@@ -45,15 +45,9 @@ class QuestionController extends Controller
 
         ]);
 
-        auth()->user()->questions()->create($request->all());
+        $question = auth()->user()->questions()->create($request->all());
 
-        // $request['slug'] = Str::slug($request->title);
-        // $request['user_id'] = Auth::id();
-        // $question = Question::create($request->all());
-
-        return response()->json([
-            'message' => 'Question Created Successfully'
-        ], 201);
+        return response()->json(new QuestionResource($question), 201);
     }
 
     /**

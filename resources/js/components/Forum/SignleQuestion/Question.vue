@@ -8,7 +8,7 @@
     <v-card-subtitle>{{ data.created_by }} said at {{ data.created_at }}</v-card-subtitle>
     <v-btn text>10 Replies</v-btn>
 
-    <v-card-text v-html="data.desc"></v-card-text>
+    <v-card-text v-html="questionDescription"></v-card-text>
 
     
 
@@ -18,7 +18,12 @@
 
 <script>
 export default {
-  props: ['data']
+  props: ['data'],
+  computed: {
+    questionDescription() {
+      return MD.parse(this.data.desc)
+    }
+  }
 }
 </script>
 

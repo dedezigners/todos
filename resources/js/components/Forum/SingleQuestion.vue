@@ -3,6 +3,7 @@
   class="py-10">
     <question
     :data="question"
+    v-if="question"
     ></question>
   </v-container>
 </template>
@@ -16,7 +17,7 @@ export default {
   },
   data() {
     return {
-      question: {}
+      question: null,
     }
   },
   created() {

@@ -35,6 +35,9 @@ import router from './router/router.js'
 import User from './helper/user'
 window.User = User
 
+import MD from 'marked'
+window.MD = MD
+
 window.EventBus = new Vue();
 
 const app = new Vue({
