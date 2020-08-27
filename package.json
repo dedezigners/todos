@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "vue-router": "^3.4.3",
+        "vue-simplemde": "^1.1.2",
         "vuetify": "^2.3.9",
         "vuetify-loader": "^1.6.0"
     }

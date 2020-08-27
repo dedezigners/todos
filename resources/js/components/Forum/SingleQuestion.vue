@@ -1,20 +1,22 @@
 <template>
   <v-container
   class="py-10">
-    <v-card
-    class="pa-5">
-      <h1>Single Question</h1>
-    </v-card>
+    <question
+    :data="question"
+    ></question>
   </v-container>
 </template>
 
 <script>
-import Question from "./Question"
+import Question from "./SignleQuestion/Question"
 
 export default {
+  components: {
+    Question
+  },
   data() {
     return {
-      question: null
+      question: {}
     }
   },
   created() {
