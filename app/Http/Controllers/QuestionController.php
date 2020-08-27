@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Question;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\QuestionResource;
 
 class QuestionController extends Controller
@@ -36,7 +38,19 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        $question = Question::create($request->all());
+        $this->validate($request, [
+            'title' => 'required|unique:questions',
+            'category_id' => 'required',
+            'description' => 'required'
+
+        ]);
+
+        auth()->user()->questions()->create($request->all());
+
+        // $request['slug'] = Str::slug($request->title);
+        // $request['user_id'] = Auth::id();
+        // $question = Question::create($request->all());
+
         return response()->json([
             'message' => 'Question Created Successfully'
         ], 201);

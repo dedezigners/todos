@@ -24,7 +24,7 @@
 
             <v-autocomplete
               label="Category"
-              v-model="form.categoryId"
+              v-model="form.category_id"
               :items="categories"
               item-text="name"
               item-value="id"
@@ -32,7 +32,7 @@
               filled
             ></v-autocomplete>
 
-            <vue-simplemde v-model="form.desc" />
+            <vue-simplemde v-model="form.description" />
 
             <v-btn dark class="mr-4" type="submit">Ask Question</v-btn>
           </form>
@@ -51,8 +51,8 @@ export default {
     return {
       form: {
         title: null,
-        categoryId: null,
-        desc: null
+        category_id: null,
+        description: null
       },
       categories: {}
     }
@@ -67,7 +67,7 @@ export default {
   },
   methods: {
     askQuestion() {
-      axios.post('/api/question')
+      axios.post('/api/question', this.form)
       .then(res => console.log(res.data))
       .catch(err => console.log(err.response.data))
     }

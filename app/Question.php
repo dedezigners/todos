@@ -2,11 +2,21 @@
 
 namespace App;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
 {
     protected $guarded = [];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function($question) {
+            $question->slug = Str::slug($question->title);
+        });
+    }
     
     public function user()
     {
