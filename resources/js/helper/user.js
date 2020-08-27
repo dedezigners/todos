@@ -53,6 +53,10 @@ class User {
         }
     }
 
+    isOwner(id) {
+        return this.id() === id
+    }
+
 }
 
 export default User = new User();

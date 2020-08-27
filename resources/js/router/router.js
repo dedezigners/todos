@@ -9,6 +9,7 @@ import Logout from "../components/Auth/Logout"
 import Forum from "../components/Forum/Forum"
 import Category from "../components/Forum/Category"
 import AskQuestion from "../components/Forum/AskQuestion"
+import EditQuestion from "../components/Forum/EditQuestion"
 import SingleQuestion from "../components/Forum/SingleQuestion"
 
 const routes = [
@@ -18,6 +19,7 @@ const routes = [
   { path: '/forum', component: Forum, name: 'forum' },
   { path: '/category', component: Category, name: 'category' },
   { path: '/ask-question', component: AskQuestion, name: 'question' },
+  { path: '/edit/:slug', component: EditQuestion, name: 'editQuestion' },
   { path: '/question/:slug', component: SingleQuestion, name: 'singleQuestion' },
 ]
 

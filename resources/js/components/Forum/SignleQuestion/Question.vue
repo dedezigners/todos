@@ -10,7 +10,15 @@
 
     <v-card-text v-html="questionDescription"></v-card-text>
 
-    
+    <v-divider></v-divider>
+    <v-card-actions v-if="isOwner">
+      <v-btn fab dark large color="cyan" @click="edit">
+        <v-icon dark>mdi-pencil</v-icon>
+      </v-btn>
+      <v-btn fab dark large color="error" @click="destroy">
+          <v-icon>mdi-delete</v-icon>
+        </v-btn>
+    </v-card-actions>
 
     </v-card>
   </v-container>
@@ -19,9 +27,25 @@
 <script>
 export default {
   props: ['data'],
+  data() {
+    return {
+      isOwner: User.isOwner(this.data.user_id)
+    }
+  },
   computed: {
     questionDescription() {
       return MD.parse(this.data.desc)
+    }
+  },
+  methods: {
+    destroy() {
+      // console.log(this.data.slug)
+      axios.delete(`/api/question/${this.data.slug}`)
+      .then(res => this.$router.push({name: 'forum'}))
+      .catch(err => console.log(err.response))
+    },
+    edit() {
+      this.$router.push(`/edit/${this.data.slug}`)
     }
   }
 }
