@@ -9,13 +9,11 @@
         <v-card
           class="pa-2"
         >
-
           <v-card-title class="text-center">Edit Question</v-card-title>
           <v-divider class="mt-2"></v-divider>
           <v-card-text>
-          <form
-            @submit.prevent="editQuestion"
-          >
+          <form @submit.prevent="editQuestion">
+
             <v-text-field
               label="Title"
               v-model="form.title"
@@ -34,7 +32,10 @@
 
             <vue-simplemde v-model="form.description" />
 
-            <v-btn dark class="mr-4" type="submit">Ask Question</v-btn>
+            <v-card-actions>
+              <v-btn dark class="mr-4" type="submit">Edit Question</v-btn>
+              <v-btn dark @click="cancleEditing">Cancle</v-btn>
+            </v-card-actions>
           </form>
           </v-card-text>
         </v-card>
@@ -47,6 +48,7 @@
 import VueSimplemde from 'vue-simplemde'
 
 export default {
+  props: ['data'],
   data() {
     return {
       form: {
@@ -54,27 +56,32 @@ export default {
         category_id: null,
         description: null
       },
-      categories: {},
-      question: {}
+      categories: {}
     }
   },
   components: {
     VueSimplemde
   },
-  created() {
+  mounted() {
     axios.get('/api/categories')
     .then(res => this.categories = res.data.data)
     .catch(err => console.log(err.response.data))
 
-    axios.get(`/api/question/${this.$route.params.slug}`)
-    .then(res => this.question = res.data.data)
-    .catch(error => console.log(error.response.data))
+    axios.get(`/api/category/${this.data.category}`)
+    .then(res => this.form.category_id = res.data.data.id)
+    .catch(err => console.log(err.response.data))
+
+    this.form.title = this.data.title
+    this.form.description = this.data.desc
   },
   methods: {
     editQuestion() {
-      axios.post('/api/question/', this.form)
-      .then(res => this.$router.push('/question/' + res.data.slug))
+      axios.patch(`/api/question/${this.data.slug}`, this.form)
+      .then(res => this.cancleEditing())
       .catch(err => console.log(err.response.data))
+    },
+    cancleEditing() {
+      EventBus.$emit('cancleEditing')
     }
   }
 }

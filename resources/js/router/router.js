@@ -19,7 +19,7 @@ const routes = [
   { path: '/forum', component: Forum, name: 'forum' },
   { path: '/category', component: Category, name: 'category' },
   { path: '/ask-question', component: AskQuestion, name: 'question' },
-  { path: '/edit/:slug', component: EditQuestion, name: 'editQuestion' },
+  // { path: '/edit/:slug', component: EditQuestion, name: 'editQuestion' },
   { path: '/question/:slug', component: SingleQuestion, name: 'singleQuestion' },
 ]
 

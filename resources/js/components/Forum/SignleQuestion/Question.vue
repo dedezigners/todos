@@ -45,7 +45,7 @@ export default {
       .catch(err => console.log(err.response))
     },
     edit() {
-      this.$router.push(`/edit/${this.data.slug}`)
+      EventBus.$emit('startEditing')
     }
   }
 }
