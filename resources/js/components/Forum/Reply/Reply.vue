@@ -7,8 +7,9 @@
         <v-list-item-subtitle>at {{ reply.created_at }}</v-list-item-subtitle>
       </v-list-item-content>
       <v-spacer></v-spacer>
-      <v-btn icon tile small>
-        <v-icon>mdi-heart</v-icon>
+      <v-btn icon tile small @click="likeIt">
+        <v-icon :color="color">mdi-heart</v-icon>
+        <strong>{{ likeCount }}</strong>
       </v-btn>
     </v-list-item>
 
@@ -29,11 +30,17 @@
 export default {
     props: ['reply', 'index'],
     data() {
-        return {}
+        return {
+          isLiked: this.reply.liked,
+          likeCount: this.reply.like_count
+        }
     },
     computed: {
         isOwner() {
             return User.isOwner(this.reply.user_id)
+        },
+        color() {
+          return this.isLiked ? 'red' : 'red lighten-4'
         }
     },
     methods: {
@@ -42,6 +49,23 @@ export default {
         },
         editReply() {
             EventBus.$emit('editReply', this.index)
+        },
+        likeIt() {
+          if (User.loggedIn()) {
+            this.isLiked ? this.decr() : this.incr()
+            this.isLiked = !this.isLiked
+          }
+        },
+        decr() {
+          axios.delete(`/api/like/${this.reply.id}`)
+          .then(res => this.likeCount--)
+          .catch(err => console.log(err.response.data))
+          
+        },
+        incr() {
+          axios.post(`/api/like/${this.reply.id}`)
+          .then(res => this.likeCount++)
+          .catch(err => console.log(err.response.data))
         }
     }
 }
