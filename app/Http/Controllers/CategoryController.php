@@ -37,15 +37,15 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        Category::create([
-            'name' => $request->name,
-            'slug' => Str::slug($request->name),
-            'user_id' => 1
+        $this->validate($request, [
+            'name' => 'required|unique:categories'
+        ]);
+        
+        $category = auth()->user()->categories()->create([
+            'name' => $request->name
         ]);
 
-        return response()->json([
-            'message' => 'Category Created Successfully'
-        ], 201);
+        return response()->json(new CategoryResource($category), 201);
     }
 
     /**
@@ -72,9 +72,7 @@ class CategoryController extends Controller
         $category->slug = Str::slug($request->name);
         $category->save();
 
-        return response()->json([
-            'message' => 'Category Updated Successfully'
-        ], 200);
+        return response()->json(new CategoryResource($category), 200);
     }
 
     /**

@@ -1,34 +1,38 @@
 <template>
   <v-container>
     <v-row>
+      
       <v-col
-        cols="12"
-        md="8"
-      >
+      cols="12"
+      md="8">
+
         <question
         v-for="question in questions"
         :key="question.title"
         :data="question"
-        ></question>
+        />
+
       </v-col>
+
       <v-col
-        cols="6"
-        md="4"
-      >
+      cols="6"
+      md="4">
+        
         <v-card
-          class="pa-2"
-          outlined
-          tile
-        >
-          Categories
+        class="pa-2"
+        outlined
+        tile>
+          <app-sidebar></app-sidebar>
         </v-card>
       </v-col>
+
     </v-row>
   </v-container>
 </template>
 
 <script>
 import Question from "./Question"
+import AppSidebar from "./AppSidebar"
 
 export default {
   data() {
@@ -38,6 +42,7 @@ export default {
   },
   components: {
     Question,
+    AppSidebar
   },
   created() {
     axios.get('/api/questions')
