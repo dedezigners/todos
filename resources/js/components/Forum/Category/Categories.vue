@@ -147,7 +147,7 @@
         } else {
 
           axios.post('/api/category', this.form)
-          .then(res => this.categories.push(res.data))
+          .then(res => this.categories.unshift(res.data))
           .catch(err => console.log(err.response.data))
 
           // this.categories.push(this.editedItem)
