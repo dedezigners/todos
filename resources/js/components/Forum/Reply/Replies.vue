@@ -5,6 +5,7 @@
                 <reply
                 v-for="(reply, index) in replies"
                 :key="index"
+                :index="index"
                 :reply="reply"
                 ></reply>
             </v-col>
@@ -20,7 +21,7 @@
                     label="Reply"
                     required
                     ></v-textarea>
-                    <v-btn color="green" dark type="submit">Reply</v-btn>
+                    <v-btn color="green" dark type="submit">{{ submitText }}</v-btn>
                 </form>
             </v-col>
         </v-row>
@@ -39,18 +40,54 @@ export default {
         return {
             form:{
                 reply: null
-            }
+            },
+            isUpdate: false,
+        }
+    },
+    created() {
+        this.listen()
+    },
+    computed: {
+        submitText() {
+            return this.isUpdate ? "Update Reply" : 'Reply'
         }
     },
     methods: {
         submitForm() {
-            console.log(this.questionSlug)
+            this.isUpdate ? this.updateReply() : this.createReply()
+        },
+
+        createReply() {
             axios.post(`/api/question/${this.questionSlug}/reply`, this.form)
             .then(res => {
                 this.form.reply = null,
                 this.replies.unshift(res.data)
             })
             .catch(err => console.log(err.response.data))
+        },
+
+        updateReply() {
+            axios.patch(`/api/question/${this.questionSlug}/reply/${this.isUpdate}`, this.form)
+            .then(res => {
+                this.form.reply = null,
+                this.isUpdate = false
+                this.replies.unshift(res.data)
+            })
+            .catch(err => console.log(err.response.data))
+        },
+
+        listen() {
+            EventBus.$on('deleteReply', (index) => {
+                axios.delete(`/api/question/${this.questionSlug}/reply/${this.replies[index].id}`)
+                .then(res => this.replies.splice(index, 1))
+                .catch(err => console.log(err.response.data))
+            })
+            
+            EventBus.$on('editReply', (index) => {
+                this.form.reply = this.replies[index].reply
+                this.isUpdate = this.replies[index].id
+                this.replies.splice(index, 1)
+            })
         }
     }
 }

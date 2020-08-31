@@ -38,7 +38,10 @@ class ReplyController extends Controller
      */
     public function store(Question $question, Request $request)
     {
-
+        $this->validate($request, [
+            'reply' => 'required'
+        ]);
+        
         $reply = $question->replies()->create([
             'reply' => $request->reply
         ]);
@@ -66,11 +69,13 @@ class ReplyController extends Controller
      */
     public function update(Request $request, Question $question, Reply $reply)
     {
+        $this->validate($request, [
+            'reply' => 'required'
+        ]);
+
         $reply->update($request->all());
 
-        return response()->json([
-            'message' => 'Reply Updated Successfully'
-        ], 200);
+        return response()->json(new ReplyResource($reply), 200);
     }
 
     /**

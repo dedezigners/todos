@@ -15,10 +15,10 @@
     <v-card-text>{{ reply.reply }}</v-card-text>
 
     <v-card-actions v-if="isOwner">
-        <v-btn color="primary" fab small dark>
+        <v-btn color="primary" fab small dark @click="editReply()">
             <v-icon>mdi-pencil</v-icon>
         </v-btn>
-        <v-btn color="error" fab small dark>
+        <v-btn color="error" fab small dark @click="deleteReply()">
             <v-icon>mdi-delete</v-icon>
         </v-btn>
     </v-card-actions>
@@ -27,7 +27,7 @@
 
 <script>
 export default {
-    props: ['reply'],
+    props: ['reply', 'index'],
     data() {
         return {}
     },
@@ -37,8 +37,11 @@ export default {
         }
     },
     methods: {
-        deleteReply(id) {
-            axios.delete(`/api/question/any-question/reply`)
+        deleteReply() {
+            EventBus.$emit('deleteReply', this.index)
+        },
+        editReply() {
+            EventBus.$emit('editReply', this.index)
         }
     }
 }
