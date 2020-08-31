@@ -6,19 +6,21 @@
     
     <v-card-title>{{ data.title }}</v-card-title>
     <v-card-subtitle>{{ data.created_by }} said at {{ data.created_at }}</v-card-subtitle>
-    <v-btn text>10 Replies</v-btn>
+    <v-btn text>{{ data.reply_count}} Replies</v-btn>
 
     <v-card-text v-html="questionDescription"></v-card-text>
 
-    <v-divider></v-divider>
-    <v-card-actions v-if="isOwner">
-      <v-btn fab dark large color="cyan" @click="edit">
-        <v-icon dark>mdi-pencil</v-icon>
-      </v-btn>
-      <v-btn fab dark large color="error" @click="destroy">
-          <v-icon>mdi-delete</v-icon>
+    <div v-if="isOwner">
+      <v-divider></v-divider>
+      <v-card-actions>
+        <v-btn fab dark large color="cyan" @click="edit">
+          <v-icon dark>mdi-pencil</v-icon>
         </v-btn>
-    </v-card-actions>
+        <v-btn fab dark large color="error" @click="destroy">
+            <v-icon>mdi-delete</v-icon>
+          </v-btn>
+      </v-card-actions>
+    </div>
 
     </v-card>
   </v-container>

@@ -13,17 +13,26 @@
     v-else
     ></question>
 
+    <v-divider></v-divider>
+
+    <replies
+    :replies="question.replies"
+    :questionSlug="question.slug"
+    ></replies>
+
   </v-container>
 </template>
 
 <script>
 import Question from "./SignleQuestion/Question"
 import EditQuestion from "./EditQuestion"
+import Replies from "./Reply/Replies"
 
 export default {
   components: {
     Question,
-    EditQuestion
+    EditQuestion,
+    Replies
   },
   data() {
     return {
