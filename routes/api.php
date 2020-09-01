@@ -40,3 +40,6 @@ Route::apiResource('/question/{question}/reply', 'ReplyController')->except('ind
 
 Route::post('/like/{reply}', 'LikeController@like')->name('like');
 Route::delete('/like/{reply}', 'LikeController@dislike')->name('dislike');
+
+Route::get('/notificaitons', 'NotifyController@notify');
+Route::post('/notificaitons/mark-as-read', 'NotifyController@readNotify');

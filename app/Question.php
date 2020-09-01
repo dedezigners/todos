@@ -37,4 +37,9 @@ class Question extends Model
     {
         return 'slug';
     }
+
+    public function getPathAttribute()
+    {
+        return "/question/{$this->slug}";
+    }
 }

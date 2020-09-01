@@ -6,6 +6,7 @@ use App\Reply;
 use App\Question;
 use Illuminate\Http\Request;
 use App\Http\Resources\ReplyResource;
+use App\Notifications\ReplyNotifications;
 
 class ReplyController extends Controller
 {
@@ -45,6 +46,11 @@ class ReplyController extends Controller
         $reply = $question->replies()->create([
             'reply' => $request->reply
         ]);
+        
+        if ($reply->user_id !== $question->user_id) {
+            $user = $question->user;
+            $user->notify(new ReplyNotifications($reply));
+        }
 
         return response()->json(new ReplyResource($reply), 201);
     }

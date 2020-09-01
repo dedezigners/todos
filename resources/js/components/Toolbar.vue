@@ -3,8 +3,8 @@
     <v-toolbar-title>
       <router-link to="/forum"><v-btn text>DeFourm</v-btn></router-link>
     </v-toolbar-title>
-
     <v-spacer></v-spacer>
+    <app-notification></app-notification>
 
     <router-link
     v-for="item in items"
@@ -18,7 +18,9 @@
 </template>
 
 <script>
+import AppNotification from './Forum/AppNotification'
 export default {
+  components: {AppNotification},
   data() {
     return {
       items: [
