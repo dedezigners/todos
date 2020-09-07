@@ -15,8 +15,8 @@
                         <v-list-item-title @click="markRead(item.id)">{{ item.data.qusetion_title }}</v-list-item-title>
                     </router-link>
                 </v-list-item>
-                <v-list-item v-for="(item, index) in readNotificaitons" :key="index">
-                    <v-list-item-title @click="markRead(item.id)">{{ item.data.qusetion_title }}</v-list-item-title>
+                <v-list-item v-for="item in readNotificaitons" :key="item.id">
+                    <v-list-item-title>{{ item.data.qusetion_title }}</v-list-item-title>
                 </v-list-item>
             </v-list>
         </v-menu>
@@ -36,6 +36,12 @@ export default {
         if (User.loggedIn()) {
             this.getNotifications()
         }
+
+        Echo.private('App.User.' + User.id())
+        .notification((notification) => {
+            this.unreadNotifications.unshift(notification)
+            this.unreadCount++
+        });
     },
     methods: {
         getNotifications() {

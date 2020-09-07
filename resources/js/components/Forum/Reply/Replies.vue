@@ -88,6 +88,21 @@ export default {
                 this.isUpdate = this.replies[index].id
                 this.replies.splice(index, 1)
             })
+
+            Echo.private('App.User.' + User.id())
+            .notification((notification) => {
+                this.replies.unshift(notification.reply)
+            });
+
+            Echo.channel('delete-reply')
+            .listen('DeleteReplyEvent', (e) => {
+                for (let index = 0; index < this.replies.length; index++) {
+                    if (this.replies[index].id === e.id) {
+                        this.replies.splice(index, 1)
+                    }
+                    
+                }
+            });
         }
     }
 }
