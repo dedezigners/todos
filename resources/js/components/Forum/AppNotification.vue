@@ -51,7 +51,7 @@ export default {
                 this.unreadNotifications = res.data.unread,
                 this.unreadCount = this.unreadNotifications.length
             })
-            .catch(err => console.log(err.response.data))
+            .catch(err => Exception.handler(err))
         },
         markRead(notifyId, index) {
             axios.post('/api/notificaitons/mark-as-read', {id: notifyId})

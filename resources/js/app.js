@@ -35,6 +35,9 @@ import router from './router/router.js'
 import User from './helper/user'
 window.User = User
 
+import Exception from './helper/exception'
+window.Exception = Exception
+
 import MD from 'marked'
 window.MD = MD
 

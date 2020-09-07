@@ -10,8 +10,8 @@
                 ></reply>
             </v-col>
         </v-row>
-        <v-divider></v-divider>
-        <v-row>
+        <v-divider v-if="loggedIn"></v-divider>
+        <v-row v-if="loggedIn">
             <v-col md="12">
                 <h3 class="mb-3">Leave your reply</h3>
                 <form @submit.prevent="submitForm">
@@ -50,6 +50,10 @@ export default {
     computed: {
         submitText() {
             return this.isUpdate ? "Update Reply" : 'Reply'
+        },
+
+        loggedIn() {
+            return User.loggedIn()
         }
     },
     methods: {
@@ -62,6 +66,8 @@ export default {
             .then(res => {
                 this.form.reply = null,
                 this.replies.unshift(res.data)
+
+                EventBus.$emit('newReply')
             })
             .catch(err => console.log(err.response.data))
         },

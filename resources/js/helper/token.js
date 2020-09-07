@@ -13,12 +13,23 @@ class Token {
 
     payload(token) {
         const payload = token.split('.')[1];
-        // console.log(token)
         return this.decode(payload)
     }
 
     decode(token) {
-        return JSON.parse(atob(token))
+        if (this.isBase64(token)) {
+            return JSON.parse(atob(token))
+        }
+
+        return false;
+    }
+
+    isBase64(str) {
+        try {
+            return btoa(atob(str)) == str
+        } catch (error) {
+            return false
+        }
     }
 
 }

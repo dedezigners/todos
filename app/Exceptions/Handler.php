@@ -56,19 +56,23 @@ class Handler extends ExceptionHandler
     {
         if ($exception instanceof TokenBlacklistedException) {
             return response()->json([
-                'message' => "Token blacklisted, get new one."
+                'message' => "Token blacklisted, get new one.",
+                'code' => 401
             ], 400);
         } elseif ($exception instanceof TokenExpiredException) {
             return response()->json([
-                'message' => "Token expired."
+                'message' => "Token expired.",
+                'code' => 401
             ], 400);
         } elseif ($exception instanceof TokenInvalidException) {
             return response()->json([
-                'message' => "Token invalid."
+                'message' => "Token invalid.",
+                'code' => 401
             ], 400);
         } elseif ($exception instanceof JWTException) {
             return response()->json([
-                'message' => "Token is not provided."
+                'message' => "Token is not provided.",
+                'code' => 401
             ], 400);
         }
 

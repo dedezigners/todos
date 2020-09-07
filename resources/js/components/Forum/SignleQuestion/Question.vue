@@ -6,7 +6,7 @@
     
     <v-card-title>{{ data.title }}</v-card-title>
     <v-card-subtitle>{{ data.created_by }} said at {{ data.created_at }}</v-card-subtitle>
-    <v-btn text>{{ data.reply_count}} Replies</v-btn>
+    <v-btn text>{{ data.reply_count }} Replies</v-btn>
 
     <v-card-text v-html="questionDescription"></v-card-text>
 
@@ -38,6 +38,25 @@ export default {
     questionDescription() {
       return MD.parse(this.data.desc)
     }
+  },
+  created() {
+    EventBus.$on('deleteReply', (index) => {
+        this.data.reply_count--
+    })
+
+    EventBus.$on('newReply', (index) => {
+        this.data.reply_count++
+    })
+
+    Echo.private('App.User.' + User.id())
+    .notification((notification) => {
+        this.data.reply_count++
+    });
+
+    Echo.channel('delete-reply')
+    .listen('DeleteReplyEvent', (e) => {
+        this.data.reply_count--
+    });
   },
   methods: {
     destroy() {
